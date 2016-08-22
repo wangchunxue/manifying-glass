@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin:0;
+		padding: 0;
+	}
+	#one{
+      width: 300px;
+      height: 200px;
+      float: left;
+      margin-right: 10px;
+      position: absolute;
+	}
+	#bigtrag{
+      width: 300px;
+      height: 200px;
+      float: left;
+      position:relative;
+      margin-right: 10px;
+	}
+	#smalltrag{
+      width: 300px;
+      height: 200px;
+      float: left;
+      margin-right: 10px;
+      overflow: hidden;
+      position: relative;
+	}
+
+	#big{
+		width: 70px;
+		height: 70px;
+		position: absolute;
+		background: #ccc;
+		left:10;
+		top: 10;
+		opacity: 0.7;
+		filter: alpha(opacity==70);
+		z-index: 1;
+		/* display: none; */
+	}
+	#two{
+		position: absolute;
+	}
+	</style>
+</head>
+<body>
+	<div id="bigtrag">
+	    <div id="big"></div>
+		<img src="1.jpg" alt="" id="one">
+	</div>
+	<div id="smalltrag">
+		<img src="1.jpg" alt="" id="two">
+	</div>
+	<script>
+		var oBigtrag=document.getElementById('bigtrag');
+		var oSmalltrag=document.getElementById('smalltrag');
+		var oBig=document.getElementById('big');
+		var oTwo=document.getElementById('two');
+        oBigtrag.onmouseover=function(){
+        	oSmalltrag.style.display='block';
+            oBig.style.display='block';
+        };
+        oBigtrag.onmouseout=function(){
+        	oSmalltrag.style.display='none';
+            oBig.style.display='none';
+        };
+        oBigtrag.onmousedown=function(e){
+        	e = event||e;
+            var left=e.clientX-oBig.offsetWidth/2;
+            var top=e.clientY-oBig.offsetHeight/2;
+            if(left>=oBigtrag.offsetWidth-oBig.offsetWidth){
+            	left=oBigtrag.offsetWidth-oBig.offsetWidth;
+            }
+            if(left<=0){
+            	left=0;
+            }
+           if(top<=0){
+            	top=0;
+            }
+             if(top>=oBigtrag.offsetHeight-oBig.offsetHeight){
+            	top=oBigtrag.offsetHeight-oBig.offsetHeight;
+            }
+            oBig.style.left=left+'px';
+            oBig.style.top=top+'px';
+            var iScaleX=(e.clientX-oBig.offsetWidth/2)/(oBigtrag.offsetWidth-oBig.offsetWidth);
+            var iScaleY=(e.clientY-oBig.offsetHeight/2)/(oBigtrag.offsetHeight-oBig.offsetHeight);
+            oTwo.style.left=-iScaleX*(oTwo.offsetWidth-oSmalltrag.offsetWidth)+'px';
+            oTwo.style.top=-iScaleY*(oTwo.offsetHeight-oSmalltrag.offsetHeight)+"px";
+            console.log(oTwo.style.left);
+            console.log(oTwo.style.top);
+
+        };
+	</script>
+</body>
+</html>
